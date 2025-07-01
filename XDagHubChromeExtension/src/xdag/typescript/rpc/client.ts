@@ -22,21 +22,6 @@ export class JsonRpcClient {
     this.rpcClient = new Client(new RequestManager([transport]));
   }
 
-  // async requestWithType<T>( method: string, args: any[], struct: Struct<T>, ): Promise<T> {
-  // 	const req = { method, args };
-  // 	const response = await this.request( method, args );
-  // 	if ( process.env.NODE_ENV === "test" ) {
-  // 		const [ err ] = validate( response, struct );
-  // 		if ( err ) {
-  // 			throw new RPCValidationError( {
-  // 				req,
-  // 				result: response,
-  // 				cause: err,
-  // 			} );
-  // 		}
-  // 	}
-  // 	return response;
-  // }
   async requestWithType<T>(
     method: string,
     args: any[] | object,

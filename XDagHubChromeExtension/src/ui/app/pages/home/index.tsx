@@ -32,7 +32,7 @@ const HomePage = ({ disableNavigation }: Props) => {
 export default HomePage;
 export { default as AssetsPage } from "./assets";
 export { default as TokensPage } from "./tokens";
-export { default as TransactionBlocksPage } from "./transactions";
+export { default as TransactionHistoryList } from "./transaction-history-list";
 export { default as TransferCoinPage } from "./transfer-coin";
 export { default as ReceiptPage } from "./receipt";
 export { default as CoinsSelectorPage } from "./transfer-coin/CoinSelector";

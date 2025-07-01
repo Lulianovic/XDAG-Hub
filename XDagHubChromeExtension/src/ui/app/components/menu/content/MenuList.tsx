@@ -4,7 +4,7 @@ import Browser from "webextension-polyfill";
 import { MenuLayout } from "./MenuLayout";
 import MenuListItem from "./MenuListItem";
 import LoadingIndicator from "../../loading/LoadingIndicator";
-import { API_ENV_TO_INFO } from "_app/ApiProvider/ApiProvider";
+import { API_ENV_TO_INFO } from "_src/ui/app/UiBridge/RpcBridge";
 import { Button } from "_app/shared/ButtonUI";
 import { lockWallet } from "_app/wallet/actions";
 import {

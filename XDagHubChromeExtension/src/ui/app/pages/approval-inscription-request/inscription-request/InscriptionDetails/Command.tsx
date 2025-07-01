@@ -1,15 +1,6 @@
 import {useState} from "react";
 import {ChevronDown12, ChevronRight12} from "_assets/icons/tsIcons";
 import {Text} from "_src/ui/app/shared/text";
-import type {
-    TransactionType,
-    TransactionArgument,
-    PublishTransaction
-} from "_src/xdag/typescript/builder";
-import {toB64} from "_src/xdag/bcs";
-import {formatAddress} from "_src/xdag/typescript/utils";
-import {normalizeXDagAddress} from "_src/xdag/typescript/types";
-import {TypeTagSerializer} from "_src/xdag/typescript/builder";
 import BigNumber from "bignumber.js";
 
 

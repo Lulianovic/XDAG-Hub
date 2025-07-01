@@ -1,7 +1,6 @@
 import { blake2b } from "@noble/hashes/blake2b";
 import { bytesToHex } from "@noble/hashes/utils";
 import {
-	SIGNATURE_SCHEME_TO_FLAG,
 	PublicKey,
 	PublicKeyInitData
 } from "../../cryptography";
@@ -59,19 +58,8 @@ export class Secp256r1PublicKey extends PublicKey
 	 * Return the Xdag address associated with this Secp256r1 public key
 	 */
 	toXDagAddress(): string {
-		let tmp = new Uint8Array( SECP256R1_PUBLIC_KEY_SIZE + 1 );
-		tmp.set( [ SIGNATURE_SCHEME_TO_FLAG[ "Secp256r1" ] ] );
-		tmp.set( this.toBytes(), 1 );
-		// Each hex char represents half a byte, hence hex address doubles the length
-		return normalizeXDagAddress(
-			bytesToHex( blake2b( tmp, { dkLen: 32 } ) ).slice( 0, XDAG_ADDRESS_LENGTH * 2 ),
-		);
+		return "";
 	}
 
-	/**
-	 * Return the Xdag address associated with this Secp256r1 public key
-	 */
-	flag(): number {
-		return SIGNATURE_SCHEME_TO_FLAG[ "Secp256r1" ];
-	}
+
 }

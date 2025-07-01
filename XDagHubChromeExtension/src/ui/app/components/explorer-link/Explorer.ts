@@ -1,4 +1,4 @@
-import { DEFAULT_API_ENV } from "_app/ApiProvider/ApiProvider";
+import { DEFAULT_API_ENV } from "_src/ui/app/UiBridge/RpcBridge";
 import { API_ENV } from "_src/shared/api-env";
 import type { XDagAddress } from "_src/xdag/typescript/types";
 

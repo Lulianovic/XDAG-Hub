@@ -11,8 +11,7 @@ type FormattedCoin = [
 	queryResult: UseQueryResult<CoinMetadata | null>,
 ];
 
-export enum CoinFormat
-{
+export enum CoinFormat {
 	ROUNDED = "ROUNDED",
 	FULL = "FULL",
 }
@@ -24,69 +23,64 @@ export function formatBalance(
 ) {
 	// const bn = new BigNumber( balance.toString() ).shiftedBy( -1 * decimals );
 	const bn = balance;
-	if ( format === CoinFormat.FULL ) {
+	if (format === CoinFormat.FULL) {
 		return bn.toFormat();
 	}
-	return formatAmount( bn );
+	return formatAmount(bn);
 }
 
 const ELLIPSIS = "\u{2026}";
 const SYMBOL_TRUNCATE_LENGTH = 5;
 const NAME_TRUNCATE_LENGTH = 10;
-export function useCoinMetadata( coinType?: string | null ) {
+export function useCoinMetadata(coinType?: string | null) {
 	const rpc = useRpcClient();
-	return useQuery( {
-		queryKey: [ "coin-metadata", coinType ],
+	return useQuery({
+		queryKey: ["coin-metadata", coinType],
 		queryFn: async () => {
-			if ( !coinType ) {
-				throw new Error( "Fetching coin metadata should be disabled when coin type is disabled.", );
+			if (!coinType) {
+				throw new Error("Fetching coin metadata should be disabled when coin type is disabled.",);
 			}
-
-			if ( coinType === XDAG_TYPE_ARG ) {
-				const metadata: CoinMetadata = {
-					id: null,
-					decimals: 9,
-					description: "",
-					iconUrl: null,
-					name: "XDag",
-					symbol: "XDAG",
-				};
-				return metadata;
-			}
-
-			return rpc.getCoinMetadata( { coinType } );
+			const metadata: CoinMetadata = {
+				id: null,
+				decimals: 9,
+				description: "",
+				iconUrl: null,
+				name: "XDag",
+				symbol: "XDAG",
+			};
+			return metadata;
 		},
-		select( data ) {
-			if ( !data ) return null;
+		select(data) {
+			if (!data) return null;
 
 			return {
 				...data,
-				symbol: data.symbol.length > SYMBOL_TRUNCATE_LENGTH ? data.symbol.slice( 0, SYMBOL_TRUNCATE_LENGTH ) + ELLIPSIS : data.symbol,
-				name: data.name.length > NAME_TRUNCATE_LENGTH ? data.name.slice( 0, NAME_TRUNCATE_LENGTH ) + ELLIPSIS : data.name,
+				symbol: data.symbol.length > SYMBOL_TRUNCATE_LENGTH ? data.symbol.slice(0, SYMBOL_TRUNCATE_LENGTH) + ELLIPSIS : data.symbol,
+				name: data.name.length > NAME_TRUNCATE_LENGTH ? data.name.slice(0, NAME_TRUNCATE_LENGTH) + ELLIPSIS : data.name,
 			};
 		},
 		retry: false,
 		enabled: !!coinType,
 		staleTime: Infinity,
 		cacheTime: 24 * 60 * 60 * 1000,
-	} );
+	});
 }
 
-export function useFormatCoin( balance?: BigNumber, coinType?: string | null, format: CoinFormat = CoinFormat.ROUNDED, ): FormattedCoin {
+export function useFormatCoin(balance?: BigNumber, coinType?: string | null, format: CoinFormat = CoinFormat.ROUNDED,): FormattedCoin {
 
 	const fallbackSymbol = useMemo(
-		() => (coinType ? CoinAPI.getCoinSymbol( coinType ) : "")
-		, [ coinType ]
+		() => (coinType ? CoinAPI.getCoinSymbol(coinType) : "")
+		, [coinType]
 	);
 
-	const queryResult = useCoinMetadata( coinType );
+	const queryResult = useCoinMetadata(coinType);
 	const { isFetched, data } = queryResult;
 
-	const formatted = useMemo( () => {
-			if ( typeof balance === "undefined" || balance === null ) return "";
-			if ( !isFetched ) return "...";
-			return formatBalance( balance, data?.decimals ?? 0, format );
-		}, [ data?.decimals, isFetched, balance, format ]
+	const formatted = useMemo(() => {
+		if (typeof balance === "undefined" || balance === null) return "";
+		if (!isFetched) return "...";
+		return formatBalance(balance, data?.decimals ?? 0, format);
+	}, [data?.decimals, isFetched, balance, format]
 	);
 
 	return [

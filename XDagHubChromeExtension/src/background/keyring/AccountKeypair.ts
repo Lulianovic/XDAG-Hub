@@ -1,40 +1,30 @@
-import { blake2b } from "@noble/hashes/blake2b";
-import { toSerializedSignature } from "_src/xdag/typescript/cryptography";
-import type { SerializedSignature, Keypair } from "_src/xdag/typescript/cryptography";
-import { fromB64, toB64 } from "_src/xdag/bcs";
+// import { blake2b } from "@noble/hashes/blake2b";
+import { toSerializedSignatureB64, SerializedSignature, Keypair } from "_src/xdag/typescript/cryptography";
+import type { } from "_src/xdag/typescript/cryptography";
+import { fromB64, fromHEX, toB64, toHEX } from "_src/xdag/bcs";
 
-export class AccountKeypair
-{
+export class AccountKeypair {
 
 	#keypair: Keypair;
 
-	constructor( keypair: Keypair ) {
+	constructor(keypair: Keypair) {
 		this.#keypair = keypair;
 	}
 
-	async sign( data: Uint8Array ): Promise<SerializedSignature> {
-		const digest = blake2b( data, { dkLen: 32 } );
+	async sign(data: string): Promise<SerializedSignature> {
+		// const digest = blake2b( data, { dkLen: 32 } );
 		const pubkey = this.#keypair.getPublicKey();
-		const signature = this.#keypair.signData( digest );
+		console.error("data in AccountKeypair:\n", data);
+		const signature = this.#keypair.signData(fromHEX(data));
+		console.error("sign in AccountKeypair:\n", toHEX(signature));
 		const signatureScheme = this.#keypair.getKeyScheme();
-		return toSerializedSignature( {
+		return toSerializedSignatureB64({
 			signature,
 			signatureScheme,
 			pubKey: pubkey,
-		} );
+		});
 	}
 
-	async signByType( data: Uint8Array, signType: string ): Promise<string> {
-		const pubkey = this.#keypair.getPublicKey();
-		const signature = this.#keypair.signDataByType( data, signType );
-		const signatureScheme = this.#keypair.getKeyScheme();
-		return signature.toString();
-		// return toSerializedSignature( {
-		// 	signature,
-		// 	signatureScheme,
-		// 	pubKey: pubkey,
-		// } );
-	}
 
 	exportKeypair() {
 		return this.#keypair.export();

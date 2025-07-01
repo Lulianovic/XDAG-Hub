@@ -30,7 +30,7 @@ import type { KeyringPayload } from "_payloads/keyring";
 import type { XDagAddress } from "_src/xdag/typescript/types";
 import type { ExportedKeypair } from "_src/xdag/typescript/cryptography";
 import { Secp256k1Keypair } from "_src/xdag/typescript/keypairs";
-import { fromB64 } from "_src/xdag/bcs";
+import { fromB64, fromHEX } from "_src/xdag/bcs";
 
 
 /** The key for the extension's storage, that holds the index of the last derived account (zero based) */
@@ -275,12 +275,14 @@ export class Keyring
 					throw new Error( "Missing parameters." );
 				}
 				const { data, address } = payload.args;
+				console.error("hash in handleuimessage:\n", data)
 				const account = this.#accountsMap.get( address );
 				if ( !account ) {
 					throw new Error( `Account for address ${ address } not found in keyring`, );
 				}
 				if ( isImportedOrDerivedAccount( account ) ) {
-					const signature = await account.accountKeypair.sign( fromB64( data ) );
+					const signature = await account.accountKeypair.sign(  data );
+					console.log("signature in signData in background:", signature);
 					uiConnection.send(
 						createMessage<KeyringPayload<"signData">>( {
 								type: "keyring",
@@ -294,30 +296,30 @@ export class Keyring
 
 
 
-			}  else if ( isKeyringPayload( payload, "signDataByType" ) ) {
-				if ( this.#locked ) {
-					throw new Error( "Keyring is locked. Unlock it first." );
-				}
-				if ( !payload.args ) {
-					throw new Error( "Missing parameters." );
-				}
-				const { data, address , signType } = payload.args;
-				const account = this.#accountsMap.get( address );
-				if ( !account ) {
-					throw new Error( `Account for address ${ address } not found in keyring`, );
-				}
-				if ( isImportedOrDerivedAccount( account ) ) {
-					const signature = await account.accountKeypair.signByType( fromB64( data ) , signType );
-					uiConnection.send(
-						createMessage<KeyringPayload<"signDataByType">>( {
-							type: "keyring",
-							method: "signDataByType",
-							return: signature,
-						}, id, ),
-					);
-				} else {
-					throw new Error( `Unable to sign message for account with type ${ account.type }`, );
-				}
+			// }  else if ( isKeyringPayload( payload, "signDataByType" ) ) {
+			// 	if ( this.#locked ) {
+			// 		throw new Error( "Keyring is locked. Unlock it first." );
+			// 	}
+			// 	if ( !payload.args ) {
+			// 		throw new Error( "Missing parameters." );
+			// 	}
+			// 	const { data, address , signType } = payload.args;
+			// 	const account = this.#accountsMap.get( address );
+			// 	if ( !account ) {
+			// 		throw new Error( `Account for address ${ address } not found in keyring`, );
+			// 	}
+			// 	if ( isImportedOrDerivedAccount( account ) ) {
+			// 		const signature = await account.accountKeypair.signByType( fromB64( data ) , signType );
+			// 		uiConnection.send(
+			// 			createMessage<KeyringPayload<"signDataByType">>( {
+			// 				type: "keyring",
+			// 				method: "signDataByType",
+			// 				return: signature,
+			// 			}, id, ),
+			// 		);
+			// 	} else {
+			// 		throw new Error( `Unable to sign message for account with type ${ account.type }`, );
+			// 	}
 
 
 

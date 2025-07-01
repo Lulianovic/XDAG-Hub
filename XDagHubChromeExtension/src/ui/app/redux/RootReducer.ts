@@ -5,6 +5,7 @@ import permissions from "./slices/permissions";
 import transactionRequests from "./slices/transaction-requests";
 import inscriptionRequests from "./slices/inscription-requests";
 import curInscriptionRequestSlice from "./slices/curInscriptionRequestSlice"
+import transactionsReducer from './slices/transaction';
 
 const rootReducer = combineReducers({
   account,
@@ -13,6 +14,7 @@ const rootReducer = combineReducers({
   transactionRequests,
   inscriptionRequests,
   curInscriptionRequestSlice,
+  transactions: transactionsReducer,
 });
 
 export type RootState = ReturnType<typeof rootReducer>;

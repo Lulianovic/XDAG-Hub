@@ -1,12 +1,12 @@
-import type { SignedTransaction } from "_src/xdag/typescript/signers";
 import type { XDagAddress } from "_src/xdag/typescript/types";
 import type { XDagTransactionBlockResponse } from "_src/xdag/typescript/types";
 import type { XdagSignMessageOutput } from "_src/xdag/features";
+import { SignedTransaction } from "_src/xdag/typescript/signers";
 
 export type TransactionDataType = {
-	type: "transaction";
+	type: "transaction";	
+	accountAddress?:XDagAddress;
 	toAddress?: XDagAddress;
-	account?:XDagAddress;
 	amount?: number;
 	remark?: string;
 	justSign?: boolean;
@@ -15,8 +15,8 @@ export type TransactionDataType = {
 
 export type SignMessageDataType = {
 	type: "sign-message";
-	message: string;
 	accountAddress: XDagAddress;
+	message: string;
 };
 
 export type ApprovalRequest = {

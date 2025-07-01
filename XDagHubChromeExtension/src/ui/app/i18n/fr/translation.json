@@ -194,7 +194,7 @@
     "ShareWalletAddress": "Partager l'adresse du portefeuille",
     "SuggestTransactionsToApprove": "Suggérer des transactions à approuver"
   },
-  "TransactionBlocksPage": {
+  "TransactionHistoryList": {
     "YourTransactions": "Vos transactions"
   },
   "PendingTransaction": {
@@ -211,9 +211,9 @@
   },
   "OnRamp": {
     "Buy": "Acheter",
-    "CoinExExchange": "Bourse CoinEx",
     "MexcExchange": "Bourse Mexc",
-    "UUbiterExchange": "Bourse UUbiter"
+    "XTExchange": "Bourse xt",
+    "BitExchange": "Bourse Bit"
   },
   "TransferCoinPage": {
     "ReviewSend": "Vérifier et envoyer",

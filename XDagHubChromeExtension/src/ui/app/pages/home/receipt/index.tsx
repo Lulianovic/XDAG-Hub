@@ -52,6 +52,7 @@ function ReceiptPage() {
 	// }, [ data ] );
 
 	if (!transactionId || !activeAddress) {
+		console.log("no transactionId or activeAddress , go to transactions history list", transactionId, activeAddress);
 		return <Navigate to="/transactions" replace={true} />;
 	}
 

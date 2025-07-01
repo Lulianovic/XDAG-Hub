@@ -101,9 +101,9 @@ export class Ed25519Keypair extends Keypair
 	signData( data: Uint8Array ): Uint8Array {
 		return nacl.sign.detached( data, this.keypair.secretKey );
 	}
-	signDataByType( data: Uint8Array, signType:string ): Uint8Array {
-		return this.signData( data );
-	}
+	// signDataByType( data: Uint8Array, signType:string ): Uint8Array {
+	// 	return this.signData( data );
+	// }
 
 	/**
 	 * Derive Ed25519 keypair from mnemonics and path. The mnemonics must be normalized

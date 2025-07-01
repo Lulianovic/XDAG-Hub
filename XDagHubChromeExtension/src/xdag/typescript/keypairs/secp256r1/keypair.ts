@@ -3,7 +3,7 @@
 
 import { secp256r1 } from "@noble/curves/p256";
 import { blake2b } from "@noble/hashes/blake2b";
-import { sha256 } from "@noble/hashes/sha256";
+import { sha256 } from "@noble/hashes/sha2";
 import { bytesToHex } from "@noble/hashes/utils";
 import { HDKey } from "@scure/bip32";
 import { Secp256r1PublicKey } from "./publickey.js";
@@ -124,9 +124,9 @@ export class Secp256r1Keypair extends Keypair {
     const sig = secp256r1.sign(msgHash, this.keypair.secretKey, { lowS: true, });
     return sig.toCompactRawBytes();
   }
-  signDataByType(data: Uint8Array, signType:string): Uint8Array {
-    return this.signData(data);
-  }
+  // signDataByType(data: Uint8Array, signType:string): Uint8Array {
+  //   return this.signData(data);
+  // }
   /**
    * Derive Secp256r1 keypair from mnemonics and path. The mnemonics must be normalized
    * and validated against the english wordlist.

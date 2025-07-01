@@ -21,9 +21,7 @@ export function GasFees( { sender, transaction }: Props ) {
 		isLoading,
 		isError,
 	} = useTransactionGasBudget( sender, transaction );
-	const isSponsored =
-		transactionData?.gasConfig.owner &&
-		transactionData.sender !== transactionData.gasConfig.owner;
+	const isSponsored = false
 	return (
 		<SummaryCard
 			header={ t( "GasFees.EstimatedGasFees" ) }
@@ -50,7 +48,7 @@ export function GasFees( { sender, transaction }: Props ) {
 							{ gasBudget ? `${ gasBudget } ${ GAS_SYMBOL }` : "-" }
 						</DescriptionItem>
 						<DescriptionItem title="Sponsor">
-							{ formatAddress( transactionData!.gasConfig.owner! ) }
+							{ formatAddress( transactionData!.sender! ) }
 						</DescriptionItem>
 					</>
 				) }

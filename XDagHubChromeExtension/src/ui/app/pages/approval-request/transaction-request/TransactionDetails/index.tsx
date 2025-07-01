@@ -27,12 +27,7 @@ export function TransactionDetails({sender, transaction}: Props) {
         isError,
     } = useTransactionData(sender, transaction);
     const {t} = useTranslation()
-    if (
-        transactionData?.transactions.length === 0 &&
-        transactionData.inputs.length === 0
-    ) {
-        return null;
-    }
+ 
 
     return (
         <SummaryCard header={t("TransactionDetails.TransactionDetails")} initialExpanded>
@@ -44,10 +39,10 @@ export function TransactionDetails({sender, transaction}: Props) {
                 <div>
                     <HeadlessTab.Group>
                         <HeadlessTab.List className="flex gap-6 border-0 border-b border-solid border-gray-45 mb-6">
-                            {!!transactionData.transactions.length && <Tab>{t("TransactionDetails.Transactions")}</Tab>}
-                            {!!transactionData.inputs.length && <Tab>{t("TransactionDetails.Inputs")}</Tab>}
+                            {!!transactionData.amount && <Tab>{t("TransactionDetails.Transactions")}</Tab>}
+                            {!!transactionData.amount && <Tab>{t("TransactionDetails.Inputs")}</Tab>}
                         </HeadlessTab.List>
-                        <HeadlessTab.Panels>
+                        {/* <HeadlessTab.Panels>
                             {!!transactionData.transactions.length && (
                                 <HeadlessTab.Panel className="flex flex-col gap-6">
                                     {
@@ -66,7 +61,7 @@ export function TransactionDetails({sender, transaction}: Props) {
                                     }
                                 </HeadlessTab.Panel>
                             )}
-                        </HeadlessTab.Panels>
+                        </HeadlessTab.Panels> */}
                     </HeadlessTab.Group>
                 </div>
             ) : (

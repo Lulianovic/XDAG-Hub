@@ -1,7 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { Field, Form, useFormikContext, Formik } from "formik";
 import { useMemo, useEffect } from "react";
-import { createTokenTransferTransactionBlock } from "./utils/transaction";
 import { createValidationSchemaStepOne } from "./validation";
 import { useActiveAddress } from "_app/hooks/useActiveAddress";
 import { Button } from "_app/shared/ButtonUI";
@@ -88,7 +87,7 @@ export function SendTokenForm({ coinType, onSubmit, initialAmount = "", initialT
 
 	// remove the comma from the token balance
 	const formattedTokenBalance = tokenBalance.replace(/,/g, "");
-	const initAmountBig = parseAmount(initialAmount, coinDecimals);
+	const initAmountBig = parseAmount(initialAmount);
 
 	const onSubmitEvent = async ({ to, amount, isPayAllXDag, gasBudgetEst, remark }: FormValues) => {
 		if (!coins || !XDagCoins) return;
@@ -102,7 +101,7 @@ export function SendTokenForm({ coinType, onSubmit, initialAmount = "", initialT
 	const hasEnoughBalance = (values: any) => {
 		if (!(values.amount)) return true;
 		if (values.isPayAllXDag) return true;
-		return XDagBalance.isGreaterThanOrEqualTo(parseAmount(values.amount, 0));
+		return XDagBalance.isGreaterThanOrEqualTo(parseAmount(values.amount));
 	}
 
 
@@ -127,7 +126,7 @@ export function SendTokenForm({ coinType, onSubmit, initialAmount = "", initialT
 				{
 					({ isValid, isSubmitting, setFieldValue, values, submitForm, validateField }) => {
 
-						const newPayXDagAll = parseAmount(values.amount, coinDecimals) === coinBalance && coinType === XDAG_TYPE_ARG;
+						const newPayXDagAll = parseAmount(values.amount) === coinBalance && coinType === XDAG_TYPE_ARG;
 						if (values.isPayAllXDag !== newPayXDagAll) {
 							setFieldValue("isPayAllXDag", newPayXDagAll);
 						}
@@ -161,7 +160,7 @@ export function SendTokenForm({ coinType, onSubmit, initialAmount = "", initialT
 													await setFieldValue("amount", formattedTokenBalance);
 													validateField("amount");
 												}}
-												actionDisabled={parseAmount(values?.amount, coinDecimals) === coinBalance || queryResult.isLoading || !coinBalance}
+												actionDisabled={parseAmount(values?.amount) === coinBalance || queryResult.isLoading || !coinBalance}
 											/>
 										</div>
 

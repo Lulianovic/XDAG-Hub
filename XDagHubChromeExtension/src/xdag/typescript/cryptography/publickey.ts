@@ -58,8 +58,6 @@ export abstract class PublicKey {
   toXdagPublicKey(): string {
     const bytes = this.toBytes();
     const XdagPublicKey = new Uint8Array(bytes.length + 1);
-    XdagPublicKey.set([this.flag()]);
-    XdagPublicKey.set(bytes, 1);
     return toB64(XdagPublicKey);
   }
 
@@ -73,8 +71,5 @@ export abstract class PublicKey {
    */
   abstract toXDagAddress(): string;
 
-  /**
-   * Return signature scheme flag of the public key
-   */
-  abstract flag(): number;
+
 }

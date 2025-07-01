@@ -193,7 +193,7 @@
     "ShareWalletAddress": "分享钱包地址",
     "SuggestTransactionsToApprove": "建议批准的交易"
   },
-  "TransactionBlocksPage": {
+  "TransactionHistoryList": {
     "YourTransactions": "您的交易"
   },
   "PendingTransaction": {
@@ -210,9 +210,9 @@
   },
   "OnRamp": {
     "Buy": "购买",
-    "CoinExExchange": "CoinEx 交易所",
-    "MexcExchange": "Mexc 交易所",
-    "UUbiterExchange": "UUbiter 交易所"
+    "MexcExchange": "Mexc交易所",
+    "XTExchange": "xt交易所",
+    "BitExchange": "Bit交易所"
   },
   "TransferCoinPage": {
     "ReviewSend": "审查 & 发送",

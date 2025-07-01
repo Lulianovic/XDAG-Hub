@@ -1,6 +1,6 @@
 import mitt from "mitt";
 import Browser from "webextension-polyfill";
-import { DEFAULT_API_ENV, ENV_TO_API } from "_app/ApiProvider/ApiProvider";
+import { DEFAULT_API_ENV, ENV_TO_API } from "_src/ui/app/UiBridge/RpcBridge";
 import { API_ENV } from "_src/shared/api-env";
 import { isValidUrl } from "_src/shared/utils";
 

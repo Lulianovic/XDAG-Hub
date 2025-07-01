@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useMemo, useState, useEffect } from "react";
 import { toast } from "react-hot-toast";
 import { CustomRPCInput } from "./custom-rpc-input";
-import { API_ENV_TO_INFO, generateActiveNetworkList, getConnectionAPI } from "_app/ApiProvider/ApiProvider";
+import { API_ENV_TO_INFO, generateActiveNetworkList, getConnectionAPI } from "_src/ui/app/UiBridge/RpcBridge";
 import { Check24 } from "_assets/icons/tsIcons";
 import { useAppSelector, useAppDispatch } from "_hooks";
 import { changeActiveNetwork } from "_redux/slices/app";

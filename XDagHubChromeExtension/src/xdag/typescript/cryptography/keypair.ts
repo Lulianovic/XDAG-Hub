@@ -3,7 +3,7 @@
 
 import { blake2b } from "@noble/hashes/blake2b";
 import { IntentScope, messageWithIntent } from "./intent.js";
-import { toSerializedSignature } from "./signature.js";
+import { toSerializedSignatureB64 } from "./signature.js";
 import type { PublicKey } from "./publickey.js";
 import type { SerializedSignature, SignatureScheme } from "./signature.js";
 
@@ -31,7 +31,7 @@ export abstract class BaseSigner
 	async signWithIntent( bytes: Uint8Array, intent: IntentScope, ): Promise<SignedMessage> {
 		const intentMessage = messageWithIntent( intent, bytes );
 		const digest = blake2b( intentMessage, { dkLen: 32 } );
-		const signature = toSerializedSignature( {
+		const signature = toSerializedSignatureB64( {
 			signature: await this.sign( digest ),
 			signatureScheme: this.getKeyScheme(),
 			pubKey: this.getPublicKey(),
@@ -57,7 +57,7 @@ export abstract class BaseSigner
 	 */
 	abstract signData( data: Uint8Array ): Uint8Array;
 
-	abstract signDataByType( data: Uint8Array, signType: string ): Uint8Array;
+	// abstract signDataByType( data: Uint8Array, signType: string ): Uint8Array;
 
 	/**
 	 * Get the key scheme of the keypair: Secp256k1 or ED25519

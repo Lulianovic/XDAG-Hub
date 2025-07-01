@@ -1,4 +1,3 @@
-import { requestXdagFromFaucetV0 } from "../faucet";
 import { JsonRpcClient } from "./client";
 import { mainnetConnection } from "./connection";
 import { DEFAULT_CLIENT_OPTIONS, WebsocketClient } from "./websocket-client";
@@ -13,6 +12,7 @@ import type { WebsocketClientOptions } from "./websocket-client";
 import { ClientAxios } from "_src/xdag/typescript/rpc/ClientAxios";
 import Browser from "webextension-polyfill";
 import { CoinMetadata } from "_src/xdag/typescript/framework";
+import { TransactionBlock } from "../builder";
 
 export type RpcProviderOptions = {
 	/**
@@ -127,30 +127,6 @@ export class JsonRpcProvider {
 	}
 
 
-	/**
-	 * Fetch CoinMetadata for a given coin type
-	 */
-	async getCoinMetadata(input: {
-		coinType: string;
-	}): Promise<CoinMetadata | null> {
-		// return await this.client.requestWithType(
-		// 	"Xdagx_getCoinMetadata",
-		// 	[ input.coinType ],
-		// 	CoinMetadataStruct,
-		// );
-		return null;
-	}
-
-
-	/**
-	 * Invoke any RPC method
-	 * @param method the method to be invoked
-	 * @param args the arguments to be passed to the RPC request
-	 */
-	async call(method: string, params: any[]): Promise<any> {
-		return await this.client.request(method, params);
-	}
-
 
 	// error response
 	// {
@@ -217,7 +193,6 @@ export class JsonRpcProvider {
 		};
 		const data = await this.axiosClient.request(postBody);
 		const response = data?.result;
-
 		if (response?.address && response?.hash) {
 			if (response.state === 'Pending') {
 				await Browser.storage.local.set({ pendingBlockAddress: response.address })
@@ -243,25 +218,43 @@ export class JsonRpcProvider {
 		return new Promise(resolve => setTimeout(resolve, ms));
 	}
 
-	//return from sever: {jsonrpc: '2.0', id: 1, result: 'uGF51DSyz6UJY7hAx1pY/QR9c632S6a2'}
-	async executeSendRawTransaction(transactionBlock: Uint8Array | string, signature: string, transactionType: string): Promise<XDagTransactionBlockResponse> {
-		if (transactionType === "transfer") {
+	// 获取nonce的函数
+	async getNonce(address: string): Promise<string> {
+		try {
 			const postBody = {
 				jsonrpc: "2.0",
-				method: "xdag_sendRawTransaction",
-				params: [signature],
+				method: "xdag_getTransactionNonce",
+				params: [address],
 				id: 1,
 			};
 			const data = await this.axiosClient.request(postBody);
-			if (data?.result) {
-				const transactionBlockAddress = data.result;
-				for (let i = 0; i <= 8; i++) {
-					const tranBlock = await this.getTransactionBlock({ digest: transactionBlockAddress });
-					if (tranBlock.errorInfo) {
-						await this.#sleep(2000);
-					} else {
-						return tranBlock;
-					}
+			return data?.result ?? '0';
+		} catch (error) {
+			console.error('获取nonce失败:', error);
+			throw error;
+		}
+	}
+
+	//return from sever: {jsonrpc: '2.0', id: 1, result: 'uGF51DSyz6UJY7hAx1pY/QR9c632S6a2'}
+	async executeSendRawTransaction(transactionBlock: TransactionBlock, signature: string): Promise<XDagTransactionBlockResponse> {
+		const postBody = {
+			jsonrpc: "2.0",
+			method: "xdag_sendRawTransaction",
+			params: [signature],
+			id: 1,
+		};
+		console.log("sendRawTransaction request to rpc:", postBody)
+		const data = await this.axiosClient.request(postBody);
+		console.log("sendRawTransaction response from rpc:", data)
+		if (data?.result) {
+			const transactionBlockAddress = data.result;
+			for (let i = 0; i <= 8; i++) {
+				const tranBlock = await this.getTransactionBlock({ digest: transactionBlockAddress });
+				console.log("getTransactionBlock transaction block address from rpc:", tranBlock)
+				if (tranBlock.errorInfo) {
+					await this.#sleep(2000);
+				} else {
+					return tranBlock;
 				}
 			}
 		}

@@ -1,11 +1,10 @@
 import { createAsyncThunk, createEntityAdapter, createSlice, } from "@reduxjs/toolkit";
-import { type WalletSigner } from "_src/ui/app/WalletSigner";
 import type { PayloadAction } from "@reduxjs/toolkit";
 import type { RootState } from "_redux/RootReducer";
 import type { AppThunkConfig } from "_store/thunk-extras";
 import { InscriptionApprovalRequest } from "_src/shared/messaging/messages/payloads/inscription";
-import { createXDagTransferTransactionBlock } from "_src/ui/app/pages/home/transfer-coin/utils/transaction";
 import { selectCurInscChunks, selectCurInscRequest, setCurInscResponse } from "../curInscriptionRequestSlice";
+import { SignerBridge } from "_src/ui/app/UiBridge/SignerBridge";
 
 const inscRequestsAdapter = createEntityAdapter<InscriptionApprovalRequest>({
 	sortComparer: (a, b) => {
@@ -17,7 +16,7 @@ const inscRequestsAdapter = createEntityAdapter<InscriptionApprovalRequest>({
 
 export const respondToInscriptionRequest = createAsyncThunk<
 	{},
-	{ inscRequestID: string; approved: boolean; signer: WalletSigner; clientIdentifier?: string; },
+	{ inscRequestID: string; approved: boolean; signer: SignerBridge; clientIdentifier?: string; },
 	AppThunkConfig
 >(
 	"respond-to-inscription-request",
@@ -35,24 +34,24 @@ export const respondToInscriptionRequest = createAsyncThunk<
 			throw new Error(`approval is false`,);
 		}
 
-		try {
-			if (inscRequest && inscRequest?.inscription && inscChunks && inscRequestID === inscRequest.id) {
-				const chunks = inscChunks.chunks;
-				const toAddress = inscRequest?.inscription?.toAddress;
-				const amount = inscChunks.singleTxCost;
-				const promises = chunks.map(async (chunkString) => {
-					const tx = createXDagTransferTransactionBlock(toAddress!, amount, chunkString);
-					const txResultId = signer.signAndExecuteTransactionBlockByType(tx, "transfer");
-					return txResultId;
-				});
-				const txResultIds = await Promise.all(promises);
-				txResult = txResultIds.filter(result => result !== undefined).map(item=>item.address); // Filter out undefined results
-			} else {
-				throw new Error(`Unexpected inscRequest or chunkResult`,);
-			}
-		} catch (error) {
-			throw new Error(`approval error`,);
-		}
+		// try {
+		// 	if (inscRequest && inscRequest?.inscription && inscChunks && inscRequestID === inscRequest.id) {
+		// 		const chunks = inscChunks.chunks;
+		// 		const toAddress = inscRequest?.inscription?.toAddress;
+		// 		const amount = inscChunks.singleTxCost;
+		// 		const promises = chunks.map(async (chunkString) => {
+		// 			const tx = createXDagTransferTransactionBlock(toAddress!, amount, chunkString);
+		// 			const txResultId = signer.signTransaction(tx);
+		// 			return txResultId;
+		// 		});
+		// 		const txResultIds = await Promise.all(promises);
+		// 		txResult = txResultIds.filter(result => result !== undefined).map(item=>item.address); // Filter out undefined results
+		// 	} else {
+		// 		throw new Error(`Unexpected inscRequest or chunkResult`,);
+		// 	}
+		// } catch (error) {
+		// 	throw new Error(`approval error`,);
+		// }
 
 		background.sendInscriptionRequestResponse(inscRequestID, approved, txResult, txResultError);
 		const inscResponse = {

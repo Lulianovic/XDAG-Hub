@@ -7,6 +7,7 @@ export type SerializedDerivedAccount = {
   type: AccountType.DERIVED;
   address: XDagAddress;
   derivationPath: string;
+  publicKey: string; 
 };
 
 export class DerivedAccount implements Account {
@@ -27,6 +28,7 @@ export class DerivedAccount implements Account {
       type: AccountType.DERIVED,
       address: this.address,
       derivationPath: this.derivationPath,
+      publicKey: this.getPublicKey(), 
     };
   }
 

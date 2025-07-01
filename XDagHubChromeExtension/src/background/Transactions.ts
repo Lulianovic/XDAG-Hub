@@ -9,10 +9,10 @@ import {
 import { type SignMessageRequest } from "_payloads/transactions/SignMessage";
 import type { XdagSignMessageOutput } from "_src/xdag/features";
 import type { XDagTransactionBlockResponse } from "_src/xdag/typescript/types";
-import type { SignedTransaction } from "_src/xdag/typescript/signers";
 import type { XdagSignTransactionSerialized } from "_payloads/transactions/ExecuteTransactionRequest";
 import type { TransactionRequestResponse } from "_payloads/transactions/ui/TransactionRequestResponse";
 import type { ContentScriptConnection } from "_src/background/connections/ContentScriptConnection";
+import { SignedTransaction } from "_src/xdag/typescript/signers";
 
 const STALE_TRANSACTION_MILLISECONDS = 1000 * 60 * 60 * 3; // 3 hours
 const TX_STORE_KEY = "transactions";
@@ -29,7 +29,7 @@ class Transactions {
 		connection: ContentScriptConnection,
 	): Promise<XDagTransactionBlockResponse | SignedTransaction> {
 		const { txResultError, txResult, txSigned } = await this.requestApproval(
-			tx ?? { type: "transaction", justSign: true, data: sign.transaction, account: sign.account },
+			tx ?? { type: "transaction", justSign: true, data: sign.transaction, accountAddress: sign.account },
 			connection.origin,
 			connection.originFavIcon,
 		);
@@ -77,7 +77,6 @@ class Transactions {
 	}
 
 	public async getTransactionRequests(): Promise<Record<string, ApprovalRequest>> {
-		console.log("%%%%%%%准备取存储的内容：",TX_STORE_KEY);
 		return (await Browser.storage.local.get({ [TX_STORE_KEY]: {} }))[TX_STORE_KEY];
 	}
 

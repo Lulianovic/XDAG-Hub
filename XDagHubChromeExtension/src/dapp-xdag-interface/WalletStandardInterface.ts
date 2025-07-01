@@ -173,7 +173,7 @@ export class XDagWallet implements Wallet {
 	};
 
 	#signTransactionBlock: XdagSignTransactionBlockMethod = async (input: any,) => {
-		if (!TransactionBlock.is(input.transactionBlock)) {
+		if (!(input?.transactionBlock)) {
 			throw new Error("Unexpect transaction format found. Ensure that you are using the `Transaction` class.",);
 		}
 		return mapToPromise(

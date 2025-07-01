@@ -1,15 +1,11 @@
 
 import {
-  SIGNATURE_SCHEME_TO_FLAG,
   PublicKey,
   PublicKeyInitData
 } from "../../cryptography";
-import { fromB64, toHEX } from "_src/xdag/bcs";
-import { normalizeXDagAddress, } from "_src/xdag/typescript/types";
-import { blake2b } from "@noble/hashes/blake2b";
+import { fromB64 } from "_src/xdag/bcs";
 
 const PUBLIC_KEY_SIZE = 32;
-const XDAG_ADDRESS_LENGTH = 33
 /**
  * An Ed25519 public key
  */
@@ -44,16 +40,7 @@ export class Ed25519PublicKey extends PublicKey {
 
 
   toXDagAddress(): string {
-    let tmp = new Uint8Array(PUBLIC_KEY_SIZE + 1);
-    tmp.set([SIGNATURE_SCHEME_TO_FLAG["ED25519"]]);
-    tmp.set(this.toBytes(), 1);
-    // Each hex char represents half a byte, hence hex address doubles the length
-    return normalizeXDagAddress(
-      toHEX(blake2b(tmp, { dkLen: 32 })).slice(0, XDAG_ADDRESS_LENGTH * 2),
-    );
+    return "";
   }
 
-  flag(): number {
-    return SIGNATURE_SCHEME_TO_FLAG["ED25519"];
-  }
 }

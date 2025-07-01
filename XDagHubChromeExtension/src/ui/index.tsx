@@ -11,7 +11,7 @@ import { initAppType } from "_redux/slices/app";
 import { getFromLocationSearch } from "_redux/slices/app/AppType";
 import { RpcClientContext } from "_src/xdag/api/RpcClient";
 import store from "_store";
-import { api, thunkExtras } from "_store/thunk-extras";
+import { uiBridge, thunkExtras } from "_store/thunk-extras";
 import "./styles/global.scss";
 import "@fontsource/inter/variable.css";
 import "@fontsource/red-hat-mono/variable.css";
@@ -56,7 +56,7 @@ function AppWrapper() {
               dehydrateOptions: { shouldDehydrateQuery: ({ meta }) => !meta?.skipPersistedCache, },
             }}
           >
-            <RpcClientContext.Provider value={api.instance.fullNode}>
+            <RpcClientContext.Provider value={uiBridge.rpcBridge.provider}>
               <ErrorBoundary>
                 <App />
               </ErrorBoundary>

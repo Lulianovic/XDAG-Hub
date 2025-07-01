@@ -12,7 +12,7 @@ import { useAppDispatch, useAppSelector } from "_hooks";
 import { ApprovalRequestPage } from "_pages/approval-request";
 import HomePage, {
   TokensPage,
-  TransactionBlocksPage,
+  TransactionHistoryList,
   TransferCoinPage,
   ReceiptPage,
   CoinsSelectorPage,
@@ -64,7 +64,7 @@ const App = () => {
         <Route path="tokens/*" element={<TokensPage />} />
         <Route path="nfts/*" element={<AssetsPage />} />
         <Route path="apps/*" element={<AppsPage />} />
-        <Route path="transactions/:status?" element={<TransactionBlocksPage />} />
+        <Route path="transactions/:status?" element={<TransactionHistoryList />} />
         <Route path="send" element={<TransferCoinPage />} />
         <Route path="send/select" element={<CoinsSelectorPage />} />
         <Route path="receipt" element={<ReceiptPage />} />

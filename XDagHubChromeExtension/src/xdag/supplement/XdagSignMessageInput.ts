@@ -1,5 +1,5 @@
-import { type SignedMessage } from "_src/xdag/typescript/signers/types";
 import type { WalletAccount } from "@wallet-standard/core";
+import { SignedMessage } from "../typescript/signers";
 
 export type XdagSignMessageMethod = (
   input: XdagSignMessageInput,

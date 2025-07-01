@@ -137,7 +137,6 @@ export default reducer;
 
 export const activeAccountSelector = (state: RootState) => {
   const { account: { address }, } = state;
-
   if (address) {
     return accountsAdapterSelectors.selectById(state, address);
   }

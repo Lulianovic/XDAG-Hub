@@ -7,6 +7,7 @@ export type SerializedImportedAccount = {
   type: AccountType.IMPORTED;
   address: XDagAddress;
   derivationPath: null;
+  publicKey: string;
 };
 
 export class ImportedAccount implements Account {
@@ -25,6 +26,7 @@ export class ImportedAccount implements Account {
       type: AccountType.IMPORTED,
       address: this.address,
       derivationPath: null,
+      publicKey: this.getPublicKey(),
     };
   }
 

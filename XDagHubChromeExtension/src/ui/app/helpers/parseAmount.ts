@@ -10,6 +10,6 @@ import BigNumber from "bignumber.js";
 //     return BigInt(0);
 //   }
 // }
-export function parseAmount( amount: string, coinDecimals: number ): BigNumber {
+export function parseAmount( amount: string ): BigNumber {
 	return new BigNumber( amount );
 }

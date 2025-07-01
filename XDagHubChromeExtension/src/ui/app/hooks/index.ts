@@ -6,7 +6,7 @@ export { default as useFullscreenGuard } from "./useFullscreenGuard";
 export { default as useOnClickOutside } from "./useOnClickOutside";
 export { default as useOnKeyboardEvent } from "./useOnKeyboardEvent";
 export { default as useFileExtensionType } from "./useFileExtensionType";
-export * from "./useSigner";
+export * from "./useSignerBridge";
 export * from "./useTransactionData";
 export * from "./useActiveAddress";
 export * from "./useGetAllCoins";

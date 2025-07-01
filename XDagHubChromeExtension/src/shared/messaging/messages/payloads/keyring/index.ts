@@ -48,10 +48,10 @@ type MethodToPayloads = {
 		args: { data: string; address: XDagAddress; };
 		return: SerializedSignature;
 	};
-	signDataByType: {
-		args: { data: string; address: XDagAddress; signType: string };
-		return: SerializedSignature;
-	};
+	// signDataByType: {
+	// 	args: { data: string; address: XDagAddress; signType: string };
+	// 	return: SerializedSignature;
+	// };
 	switchAccount: {
 		args: { address: XDagAddress };
 		return: void;

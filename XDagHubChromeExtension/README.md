@@ -9,8 +9,7 @@ This is a browser extension for XDAG blockchain, aimed at providing APIs for eco
 pnpm upgrade
 pnpm install
 pnpm run dev
-```
-The output directory is the same [dist/](./dist/), all build artifacts will go there
+```The output directory is the same [dist/](./dist/), all build artifacts will go there
 
 ## Build once in prod mode
 
@@ -18,8 +17,14 @@ The output directory is the same [dist/](./dist/), all build artifacts will go t
  pnpm run prod
 ```
 
-Same as above the output is [dist/](./dist/).
+Same as above, the output is [dist/](./dist/).
 
 ## Install the extension to Chrome
 
 After building the app, the extension needs to be installed to Chrome. Follow the steps to [load an unpacked extension](https://developer.chrome.com/docs/extensions/mv3/getstarted/#unpacked) and install the app from the [dist/](./dist/) directory.
+
+
+TODO:
+src\xdag\typescript\signers\signer-with-provider.ts
+src\ui\app\WalletSigner
+src\xdag\typescript\builder\TransactionBlockData.ts

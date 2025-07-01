@@ -6,6 +6,6 @@ export type SignedTransaction = {
 };
 
 export type SignedMessage = {
-  messageBytes: string;
-  signature: SerializedSignature;
+  messageBytes: Uint8Array;
+  signature: string;
 };

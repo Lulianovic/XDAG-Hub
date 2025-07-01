@@ -194,7 +194,7 @@
     "ShareWalletAddress": "Поделиться адресом",
     "SuggestTransactionsToApprove": "Предложить транзакции для одобрения"
   },
-  "TransactionBlocksPage": {
+  "TransactionHistoryList": {
     "YourTransactions": "Ваши транзакции"
   },
   "PendingTransaction": {
@@ -211,9 +211,9 @@
   },
   "OnRamp": {
     "Buy": "Купить",
-    "CoinExExchange": "CoinEx Exchange",
     "MexcExchange": "Mexc Exchange",
-    "UUbiterExchange": "UUbiter Exchange"
+    "XTExchange": "XT Exchange",
+    "BitExchange": "Bit Exchange"
   },
   "TransferCoinPage": {
     "ReviewSend": "Просмотр и отправка",

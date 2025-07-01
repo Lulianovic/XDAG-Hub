@@ -5,7 +5,6 @@ import {
 	useActiveAddress,
 	useAppDispatch,
 	useGetAllCoins,
-	useSigner,
 } from "_hooks";
 import { type TransactionApprovalRequest } from "_payloads/transactions/ApprovalRequest";
 import { useTranslation } from "react-i18next";
@@ -27,6 +26,8 @@ export type TransactionRequestProps = {
 
 export const InscriptionRequest = ({ inscRequest }: { inscRequest: InscriptionApprovalRequest }) => {
 
+	return <></>
+/*
 	const toAddress = inscRequest.inscription.toAddress;
 	const dispatch = useAppDispatch();
 	const navigate = useNavigate();
@@ -124,4 +125,5 @@ export const InscriptionRequest = ({ inscRequest }: { inscRequest: InscriptionAp
 			/>
 		</>
 	);
+	*/
 }

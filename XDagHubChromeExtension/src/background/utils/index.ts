@@ -12,8 +12,6 @@ export function base64DecodeJson(base46Str: string): {} {
     return obj1;
 }
 
-
-
 export function base64Encode(str: string) {
     const encoder = new TextEncoder();
     const data = encoder.encode(str);
@@ -24,7 +22,6 @@ export function base64Encode(str: string) {
     }
     return btoa(binary);
 }
-
 
 export function base64Decode(str: string) {
     const binary = atob(str);
